@@ -60,14 +60,16 @@ const commands = {
 						
 						for (let a = 0; a < row.length; a++){
 							let temp = client.guilds.get(row[a].guildid);
-							if (temp.id === msg.guild.id){
-								if (!msg.guild.channels.has(row[a].partner)){
-									sendEmbed(msg, msg.guild.id, msg.channel.id, `You must first initialize a channel for the bot in ${msg.guild.name} with \`${tokens.prefix}init\`before you can bump your server.`);
-									lastDate[msg.guild.id] = 0;
-									return;
+							if (temp){
+								if (temp.id === msg.guild.id){
+									if (!msg.guild.channels.has(row[a].partner)){
+										sendEmbed(msg, msg.guild.id, msg.channel.id, `You must first initialize a channel for the bot in ${msg.guild.name} with \`${tokens.prefix}init\`before you can bump your server.`);
+										lastDate[msg.guild.id] = 0;
+										return;
+									}
+									desc = row[a].desc;
+									break;
 								}
-								desc = row[a].desc;
-								break;
 							}
 						}
 						
@@ -75,13 +77,14 @@ const commands = {
 							lastDate[msg.guild.id] = 0;
 							return sendEmbed(msg, msg.guild.id, msg.channel.id, `A description for ${msg.guild.name} has not been set yet. Please set one.`);
 						}
-
-						if (guild.channels.has(row[i].partner) && guild.id !== msg.guild.id){
-							let str = [
-								`__**${msg.guild.name}**__`,
-								`${desc} ${invite.url}`
-							];
-							guild.channels.get(row[i].partner).send(str.join('\n\n'));
+						if (guild){
+							if (guild.channels.has(row[i].partner) && guild.id !== msg.guild.id){
+								let str = [
+									`__**${msg.guild.name}**__`,
+									`${desc} ${invite.url}`
+								];
+								guild.channels.get(row[i].partner).send(str.join('\n\n'));
+							}
 						}
 					}
 					sendEmbed(msg, msg.guild.id, msg.channel.id, `Bumped sucessfully to **${row.length - 1}** guilds.`);
