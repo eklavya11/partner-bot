@@ -11,7 +11,7 @@ const commands = {
 	'help': (msg) => {
 	  msg.channel.send({embed: {
 			title: 'Vyla Help Central',
-			description: `The bot was created by **valk#7218**, if you have any questions or would like to suggest new features or report bugs, please send them a direct message. All commands start with \`${tokens.prefix}\`.`,
+			description: `The bot was created by **Eklavya11**, if you have any questions or would like to suggest new features or report bugs, please send them a direct message. All commands start with \`${tokens.prefix}\`.`,
 			fields: [
 			{
 				name: 'invite',
